@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT - Glowmotion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+
+        /* 상단 완전히 까만 고정 네비게이션 바 (수정된 버전) */
+        .navbar {
+            background-color: #000000;
+            width: 100%;
+            height: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999; /* 클릭이 절대 가려지지 않도록 최상단으로 설정 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-img { height: 35px; width: auto; }
+
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-item {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 10000; /* 링크 자체에 마우스 이벤트가 확실히 닿도록 지정 */
+            cursor: pointer;
+        }
+        .nav-item:hover, .nav-item.active { color: #fff; font-weight: 700; }
+
+        .section-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .about-hero {
+            background-color: #050505;
+            color: #ffffff;
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+            align-items: flex-start;
+            padding-top: 80px;
+        }
+
+        .section-title-dark {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            color: #ffffff;
+            border-bottom: 2px solid #333333;
+            padding-bottom: 20px;
+        }
+
+        .text-dark-bg {
+            font-size: 18px;
+            line-height: 1.9;
+            color: #dddddd;
+            max-width: 900px;
+        }
+
+        .white-scene {
+            background-color: #ffffff;
+            color: #111111;
+        }
+
+        .white-scene .content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .section-title-white {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            color: #111111;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 20px;
+            width: 100%;
+        }
+
+        .text-white-bg {
+            font-size: 18px;
+            line-height: 1.9;
+            color: #333333;
+            max-width: 900px;
+        }
+
+        .black-scene {
+            background-color: #0d0d12;
+            color: #ffffff;
+        }
+
+        .info-section {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 25px 0;
+        }
+
+        .info-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .bar-logo-img {
+            height: 36px;
+            width: auto;
+            display: block;
+        }
+
+        .bar-company-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: 1.5px;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        .youtube-link {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .youtube-link:hover {
+            opacity: 0.7;
+            transform: scale(1.05);
+        }
+
+        .youtube-icon {
+            width: 30px;
+            height: 21px;
+            fill: currentColor;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 네비게이션 바 -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Glowmotion Logo" class="logo-img" onerror="this.style.display='none'">
+                <span>GLOWMOTION</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="about.html" class="nav-item active">ABOUT</a>
+                <a href="talent.html" class="nav-item">TALENT</a>
+                <a href="news.html" class="nav-item">NEWS</a>
+                <a href="notice.html" class="nav-item">NOTICE</a>
+                <a href="contact.html" class="nav-item">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="section-wrapper about-hero">
+        <div class="content-container">
+            <h1 class="section-title-dark">ABOUT US</h1>
+            <div class="text-dark-bg">
+                <p>글로우모션(GLOWMOTION)은 차세대 디지털 콘텐츠와 크리에이터들의 가치를 극대화하는 엔터테인먼트 기업입니다.</p>
+                <p>우리는 혁신적인 미디어 솔루션과 독창적인 기획력을 바탕으로 창작자와 함께 성장합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-wrapper white-scene">
+        <div class="content-container">
+            <h2 class="section-title-white">OUR VISION</h2>
+            <div class="text-white-bg">
+                <p>글로벌 독자들에게 새로운 경험과 즐거움을 선사하며, 미디어 시장의 새로운 기준을 제시합니다.</p>
+                <p>원하는 내용을 이 하얀 화면 공간에 자유롭게 채워 넣으실 수 있습니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-wrapper black-scene">
+        <div class="content-container">
+            <h2 class="section-title-dark">BUSINESS & VALUE</h2>
+            <div class="text-dark-bg">
+                <p>크리에이터 맞춤형 매니지먼트와 프리미엄 브랜딩 솔루션을 제공합니다.</p>
+                <p>지속 가능한 성장과 함께 최고의 콘텐츠 가치를 만들어 갑니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="info-container">
+            <div class="brand-group">
+                <img src="black logo.png" alt="Glowmotion Black Logo" class="bar-logo-img" onerror="this.style.display='none'">
+                <span class="bar-company-name">GLOWMOTION</span>
+            </div>
+            <a href="https://www.youtube.com/@GlowmotionEntertainment" target="_blank" rel="noopener noreferrer" class="youtube-link" title="Glowmotion YouTube">
+                <svg class="youtube-icon" viewBox="0 0 24 17" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.498 2.628a3.016 3.016 0 0 0-2.122-2.136C19.505 0 12 0 12 0s-7.505 0-9.377.492A3.017 3.017 0 0 0 .502 2.628C0 4.515 0 8.44 0 8.44s0 3.926.502 5.813a3.016 3.016 0 0 0 2.122 2.136c1.871.493 9.376.493 9.376.493s7.505 0 9.377-.493a3.015 3.015 0 0 0 2.122-2.136C24 12.366 24 8.44 24 8.44s0-3.925-.502-5.812zM9.545 12.022V4.858l6.273 3.582-6.273 3.582z"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>

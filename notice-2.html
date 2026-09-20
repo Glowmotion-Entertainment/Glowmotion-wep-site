@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTICE - Glowmotion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
+
+        /* 상단 완전히 까만 고정 네비게이션 바 (수정된 버전) */
+        .navbar {
+            background-color: #000000;
+            width: 100%;
+            height: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999; /* 클릭이 절대 가려지지 않도록 최상단으로 설정 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-img { height: 35px; width: auto; }
+
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-item {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 10000; /* 링크 자체에 마우스 이벤트가 확실히 닿도록 지정 */
+            cursor: pointer;
+        }
+        .nav-item:hover, .nav-item.active { color: #fff; font-weight: 700; }
+
+        /* NOTICE 메인 영역 */
+        .notice-hero {
+            margin-top: 70px;
+            width: 100%;
+            min-height: calc(100vh - 70px - 86px);
+            padding: 80px 20px;
+            background-color: #050505;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .notice-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .notice-title {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            color: #ffffff;
+            border-bottom: 2px solid #333333;
+            padding-bottom: 20px;
+        }
+
+        /* 공지사항 목록 */
+        .notice-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notice-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: #ffffff;
+            transition: background-color 0.2s;
+        }
+
+        .notice-item:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .notice-item:hover .notice-item-title {
+            color: #4da6ff;
+        }
+
+        .notice-item-title {
+            font-size: 17px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .notice-item-date {
+            font-size: 14px;
+            color: #777777;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        /* 페이지 번호 버튼 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 50px;
+        }
+
+        .page-num {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            color: #888888;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .page-num:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .page-num.active {
+            color: #ffffff;
+            background-color: #22222a;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 하단 하얀 띠 섹션 */
+        .info-section {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 25px 0;
+            margin-top: 40px;
+        }
+
+        .info-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-group { display: flex; align-items: center; gap: 14px; }
+        .bar-logo-img { height: 36px; width: auto; display: block; }
+        .bar-company-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: 1.5px;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        .youtube-link {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .youtube-link:hover { opacity: 0.7; transform: scale(1.05); }
+        .youtube-icon { width: 30px; height: 21px; fill: currentColor; display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 네비게이션 바 -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Glowmotion Logo" class="logo-img" onerror="this.style.display='none'">
+                <span>GLOWMOTION</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="about.html" class="nav-item">ABOUT</a>
+                <a href="talent.html" class="nav-item">TALENT</a>
+                <a href="news.html" class="nav-item">NEWS</a>
+                <a href="notice.html" class="nav-item active">NOTICE</a>
+                <a href="contact.html" class="nav-item">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- NOTICE 메인 영역 -->
+    <main class="notice-hero">
+        <div class="notice-container">
+            <h1 class="notice-title">NOTICE</h1>
+
+            <!-- 2페이지 공지사항 5개 목록 -->
+            <div class="notice-list">
+                <a href="#" class="notice-item">
+                    <span class="notice-item-title">[공지] 글로우모션 2025년 하반기 파트너십 서비스 점검 완료</span>
+                    <span class="notice-item-date">2025.12.28</span>
+                </a>
+                <a href="#" class="notice-item">
+                    <span class="notice-item-title">[안내] 크리에이터 콘텐츠 가이드라인 업데이트 고지</span>
+                    <span class="notice-item-date">2025.11.15</span>
+                </a>
+                <a href="#" class="notice-item">
+                    <span class="notice-item-title">[공지] 글로우모션 서버 이전 및 도메인 정리 안내</span>
+                    <span class="notice-item-date">2025.10.02</span>
+                </a>
+                <a href="#" class="notice-item">
+                    <span class="notice-item-title">[채용] 2025 하반기 그래픽 디자이너 채용 최종 결과 발표</span>
+                    <span class="notice-item-date">2025.09.10</span>
+                </a>
+                <a href="#" class="notice-item">
+                    <span class="notice-item-title">[공지] 글로우모션 엔터테인먼트 공식 창립 발표</span>
+                    <span class="notice-item-date">2025.08.01</span>
+                </a>
+            </div>
+
+            <!-- 하단 페이지 번호 -->
+            <div class="pagination">
+                <a href="notice.html" class="page-num">1</a>
+                <a href="notice-2.html" class="page-num active">2</a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 최하단 하얀 띠 섹션 -->
+    <section class="info-section">
+        <div class="info-container">
+            <div class="brand-group">
+                <img src="black logo.png" alt="Glowmotion Black Logo" class="bar-logo-img" onerror="this.style.display='none'">
+                <span class="bar-company-name">GLOWMOTION</span>
+            </div>
+            <a href="https://www.youtube.com/@GlowmotionEntertainment" target="_blank" rel="noopener noreferrer" class="youtube-link" title="Glowmotion YouTube">
+                <svg class="youtube-icon" viewBox="0 0 24 17" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.498 2.628a3.016 3.016 0 0 0-2.122-2.136C19.505 0 12 0 12 0s-7.505 0-9.377.492A3.017 3.017 0 0 0 .502 2.628C0 4.515 0 8.44 0 8.44s0 3.926.502 5.813a3.016 3.016 0 0 0 2.122 2.136c1.871.493 9.376.493 9.376.493s7.505 0 9.377-.493a3.015 3.015 0 0 0 2.122-2.136C24 12.366 24 8.44 24 8.44s0-3.925-.502-5.812zM9.545 12.022V4.858l6.273 3.582-6.273 3.582z"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>
