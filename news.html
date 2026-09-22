@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #050505; color: #fff; overflow-x: hidden; }
 
-        /* 상단 완전히 까만 고정 네비게이션 바 (수정된 버전) */
+        /* 상단 완전히 까만 고정 네비게이션 바 */
         .navbar {
             background-color: #000000;
             width: 100%;
@@ -16,13 +16,13 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 9999; /* 클릭이 절대 가려지지 않도록 최상단으로 설정 */
+            z-index: 9999;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-container {
             width: 100%;
-            max-width: 100%;
+            max-width: 1400px;
             height: 100%;
             margin: 0 auto;
             padding: 0 40px;
@@ -42,7 +42,7 @@
             letter-spacing: 1.5px;
         }
 
-        .logo-img { height: 35px; width: auto; }
+        .logo-img { height: 35px; width: auto; object-fit: contain; }
 
         .nav-menu { display: flex; gap: 30px; }
         .nav-item {
@@ -53,10 +53,30 @@
             letter-spacing: 1px;
             transition: color 0.3s;
             position: relative;
-            z-index: 10000; /* 링크 자체에 마우스 이벤트가 확실히 닿도록 지정 */
+            z-index: 10000;
             cursor: pointer;
         }
         .nav-item:hover, .nav-item.active { color: #fff; font-weight: 700; }
+
+        /* 햄버거 토글 버튼 (PC에서는 숨김) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+        }
 
         .news-hero {
             margin-top: 70px;
@@ -103,6 +123,7 @@
         .news-card:hover { transform: translateY(-5px); }
         .news-card:hover .news-card-title { color: #4da6ff; }
 
+        /* 외부 서버 오류를 막기 위해 순수 CSS 박스로 변경된 이미지 박스 */
         .news-image-box {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -111,9 +132,15 @@
             overflow: hidden;
             margin-bottom: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666677;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
-        .news-image { width: 100%; height: 100%; object-fit: cover; display: block; }
         .news-date { font-size: 13px; color: #777777; margin-bottom: 8px; }
 
         .news-card-title {
@@ -149,6 +176,7 @@
             width: 100%;
             background-color: #ffffff;
             padding: 25px 0;
+            margin-top: auto;
         }
 
         .info-container {
@@ -183,8 +211,53 @@
         .youtube-link:hover { opacity: 0.7; transform: scale(1.05); }
         .youtube-icon { width: 30px; height: 21px; fill: currentColor; display: block; }
 
-        @media (max-width: 900px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .news-grid { grid-template-columns: 1fr; } }
+        /* 모바일 반응형 네비게이션 및 그리드 조정 (1024px 이하) */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            .logo {
+                font-size: 15px;
+                gap: 10px;
+            }
+            .logo-img {
+                height: 28px;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-menu {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #000000;
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-menu.active {
+                max-height: 350px;
+            }
+            .nav-item {
+                width: 100%;
+                text-align: center;
+                padding: 15px 0;
+                font-size: 15px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .news-grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px;
+            }
+            .news-title {
+                font-size: 30px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -196,7 +269,13 @@
                 <img src="logo.png" alt="Glowmotion Logo" class="logo-img" onerror="this.style.display='none'">
                 <span>GLOWMOTION</span>
             </a>
-            <nav class="nav-menu">
+            <!-- 햄버거 토글 버튼 -->
+            <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-menu" id="navMenu">
                 <a href="about.html" class="nav-item">ABOUT</a>
                 <a href="talent.html" class="nav-item">TALENT</a>
                 <a href="news.html" class="nav-item active">NEWS</a>
@@ -212,23 +291,17 @@
 
             <div class="news-grid">
                 <a href="#" class="news-card">
-                    <div class="news-image-box">
-                        <img src="news1.jpg" alt="뉴스 이미지 1" class="news-image" onerror="this.src='https://via.placeholder.com/600x337/1a1a24/ffffff?text=NEWS+1'">
-                    </div>
+                    <div class="news-image-box">NEWS 1</div>
                     <span class="news-date">준비중입니다.</span>
                     <h3 class="news-card-title">준비중입니다.</h3>
                 </a>
                 <a href="#" class="news-card">
-                    <div class="news-image-box">
-                        <img src="news2.jpg" alt="뉴스 이미지 2" class="news-image" onerror="this.src='https://via.placeholder.com/600x337/1a1a24/ffffff?text=NEWS+2'">
-                    </div>
+                    <div class="news-image-box">NEWS 2</div>
                     <span class="news-date">준비중입니다.</span>
                     <h3 class="news-card-title">준비중입니다.</h3>
                 </a>
                 <a href="#" class="news-card">
-                    <div class="news-image-box">
-                        <img src="news3.jpg" alt="뉴스 이미지 3" class="news-image" onerror="this.src='https://via.placeholder.com/600x337/1a1a24/ffffff?text=NEWS+3'">
-                    </div>
+                    <div class="news-image-box">NEWS 3</div>
                     <span class="news-date">준비중입니다.</span>
                     <h3 class="news-card-title">준비중입니다.</h3>
                 </a>
@@ -255,5 +328,20 @@
         </div>
     </section>
 
+    <!-- 햄버거 메뉴 작동용 자바스크립트 -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
